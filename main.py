@@ -121,12 +121,54 @@ def solve_get_longest_same_bit_counts():
         f"Cea mai lunga subsecventa cu numere care au acelasi numar de biti 1 este: {get_longest_same_bit_counts(lst)}")
 
 
+#Problema 9: Produsul numerelor este impar
+
+def get_product(lst : list[int]):
+    prod = 1
+    for x in lst:
+        prod *= x
+    
+    return prod
+
+
+def get_longest_product_is_odd(lst: list[int]):
+    start, end, maxim = 0, 0, 0
+    for i in range(len(lst)):
+        for j in range(i, len(lst)):
+            if maxim < j - i + 1 and get_product(lst[i:j+1])%2==1:
+                maxim = j-i+1
+                start = i
+                end = j
+    
+    rezultat_lista = lst[start : end+1]
+    return rezultat_lista
+
+def test_get_longest_product_is_odd():
+    assert get_longest_product_is_odd([1,2,3,7,5]) == [3,7,5]
+    assert get_longest_product_is_odd([1,2,3,4,3,5,6,7,9,9]) == [7,9,9]
+    assert get_longest_product_is_odd([]) == []
+
+test_get_longest_product_is_odd()
+
+def solve_get_longest_product_is_odd():
+    n = int(input("Scrie numarul de elemente din lista: "))
+    lst = []
+    for index in range(n):
+        el = int(input(f"Scrie elementul {index}: "))
+        lst.append(el)
+
+    print(
+        f"Cea mai lunga subsecventa cu produsul numerelor impar este: {get_longest_product_is_odd(lst)}")
+
+
 def main():
 
     isrunning = True
     while isrunning:
-        meniu = "Proprietatea 1: Numerele au semne alternante.\nProprietatea 2: Toate numerele au același număr de biți de 1 în reprezentarea binară.\nx - program incheiat"
-        print("Meniu:\n" + meniu)
+        print("1 : Numerele au semne alternante.")
+        print("2 : Toate numerele au același număr de biți de 1 în reprezentarea binară.")
+        print("3 : Produsul numerelor este impar.")
+        print("x : Program incheiat.")
         proprietatea = input("Scrie numarul prorietatii: ")
 
         if proprietatea == "1":
@@ -136,6 +178,9 @@ def main():
             print(
                 "Ai ales proprietatea 2: Toate numerele au același număr de biți de 1 în reprezentarea binară.")
             solve_get_longest_same_bit_counts()
+        elif proprietatea == '3':
+            print("Ai ales proprietatea 3: Produsul numerelor este impar.")
+            solve_get_longest_product_is_odd()
         elif proprietatea == 'x':
             print("Program incheiat!")
             isrunning = False
